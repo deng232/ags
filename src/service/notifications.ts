@@ -366,12 +366,12 @@ export class Notifications extends Service {
         // follow expiration
 
 
-        if (this.forceTimeout) {
-            if (this.popupTimeout >= 0) {
+        if (this.forceTimeout || expiration === -1) {
+            if (this.popupTimeout > 0) {
                 n.updateProperty('timeout', this.popupTimeout);
                 timeout(this.popupTimeout, () => this.DismissNotification(id));
             }
-            // else not handle timeout
+            // else not handle timeout here
         } else {
             n.updateProperty('timeout', expiration);
             if (expiration > 0)
