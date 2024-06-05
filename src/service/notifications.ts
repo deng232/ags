@@ -349,7 +349,7 @@ export class Notifications extends Service {
     ) {
         const id = replacesId || this._idCount++;
         const n = new Notification(appName, id, appIcon, summary, body, acts, hints, !this.dnd);
-
+        /*
         if (this.forceTimeout || expiration === -1) {
             n.updateProperty('timeout', this.popupTimeout);
             timeout(this.popupTimeout, () => this.DismissNotification(id));
@@ -358,6 +358,27 @@ export class Notifications extends Service {
             if (expiration > 0)
                 timeout(expiration, () => this.DismissNotification(id));
         }
+        */
+
+        // follow forceTimeout
+        //     have finite timeout
+        //     not handle timeout
+        // follow expiration
+
+
+        if (this.forceTimeout) {
+            if (this.popupTimeout >= 0) {
+                n.updateProperty('timeout', this.popupTimeout);
+                timeout(this.popupTimeout, () => this.DismissNotification(id));
+            }
+            // else not handle timeout
+        } else {
+            n.updateProperty('timeout', expiration);
+            if (expiration > 0)
+                timeout(expiration, () => this.DismissNotification(id))
+        }
+
+
 
         this._addNotification(n);
         !this._dnd && this.notify('popups');

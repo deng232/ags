@@ -1,0 +1,10 @@
+{
+    "editor.fontFamily": "'DejaVu Sans Mono'",
+    "terminal.integrated.fontFamily": "'DejaVu Sans Mono'",
+    "window.titleBarStyle": "custom",
+    "workbench.colorTheme": "Stylix",
+    "[typescript]": {
+      "editor.defaultFormatter": "vscode.typescript-language-features"
+    }
+  }
+  
