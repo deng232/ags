@@ -14,6 +14,9 @@ export const CACHE_DIR = `${GLib.get_user_cache_dir()}/${pkg.name.split('.').pop
 
 export const getenv = GLib.getenv
 
+export const get_environ = GLib.get_environ().map((str: string) => str.split("="))
+    .reduce((acc: { [x: string]: string; }, c: string[]) => { acc[c[0]] = c[1]; return acc }, {} as Record<string, string>)
+
 export const {
     exec,
     execAsync,
