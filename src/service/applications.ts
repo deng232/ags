@@ -27,7 +27,7 @@ export class Application extends Service {
         return this._term
     }
     get is_term() {
-        return this._app.app_get_boolean("Terminal")
+        return this._app.get_boolean("Terminal")
     }
     get frequency() { return this._frequency; }
     set frequency(value) {
