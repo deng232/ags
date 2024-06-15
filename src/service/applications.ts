@@ -21,7 +21,7 @@ export class Application extends Service {
 
     private _app: Gio.DesktopAppInfo;
     private _frequency: number;
-    private _term:string = getenv('TERM')
+    private _term:string = getenv('TERM') ?? ""
     get app() { return this._app; }
     get Terminal() {
         return this._term
