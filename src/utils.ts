@@ -8,10 +8,11 @@ import * as Notify from './utils/notify.js';
 import * as Pam from './utils/pam.js';
 import * as Gobject from './utils/gobject.js';
 import * as Binding from './utils/binding.js';
-
 export const USER = GLib.get_user_name();
 export const HOME = GLib.get_home_dir();
 export const CACHE_DIR = `${GLib.get_user_cache_dir()}/${pkg.name.split('.').pop()}`;
+
+export const getenv = GLib.getenv
 
 export const {
     exec,
@@ -65,6 +66,8 @@ export default {
     USER,
     HOME,
     CACHE_DIR,
+
+    getenv,
 
     exec,
     execAsync,
