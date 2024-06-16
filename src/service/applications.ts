@@ -26,6 +26,9 @@ export class Application extends Service {
     get Terminal() {
         return this._term
     }
+    set Terminal(str:string) {
+        this._term = str
+    }
     get is_term() {
         return this._app.get_boolean("Terminal")
     }
