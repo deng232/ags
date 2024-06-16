@@ -1,6 +1,6 @@
 import Gio from 'gi://Gio';
 import Service from '../service.js';
-import utils, { CACHE_DIR, ensureDirectory, readFile, writeFile,getenv } from '../utils.js';
+import utils, { CACHE_DIR, ensureDirectory, readFile, writeFile, getenv } from '../utils.js';
 const APPS_CACHE_DIR = `${CACHE_DIR}/apps`;
 const CACHE_FILE = APPS_CACHE_DIR + '/apps_frequency.json';
 
@@ -21,7 +21,7 @@ export class Application extends Service {
 
     private _app: Gio.DesktopAppInfo;
     private _frequency: number;
-    private _term:string = getenv('TERM') ?? ""
+    private _term: string = getenv('TERM') ?? ""
     get app() { return this._app; }
     get Terminal() {
         return this._term
@@ -71,7 +71,13 @@ export class Application extends Service {
     };
 
     readonly launch = () => {
-        this.app.launch([], null);
+        if (this.Terminal) {
+            utils.execAsync([this.Terminal,this.name])
+        } else {
+            this.app.launch([], null);
+        }
+
+
         this.frequency++;
     };
 }
