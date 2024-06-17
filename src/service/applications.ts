@@ -1,8 +1,10 @@
 import Gio from 'gi://Gio';
 import Service from '../service.js';
 import utils, { CACHE_DIR, ensureDirectory, readFile, writeFile, getenv } from '../utils.js';
+
 const APPS_CACHE_DIR = `${CACHE_DIR}/apps`;
 const CACHE_FILE = APPS_CACHE_DIR + '/apps_frequency.json';
+
 
 
 export class Application extends Service {
@@ -21,18 +23,17 @@ export class Application extends Service {
 
     private _app: Gio.DesktopAppInfo;
     private _frequency: number;
-    private _term: string = getenv('TERM') ?? ""
+    private __is_term_app:boolean;
     get app() { return this._app; }
-    get Terminal() {
-        return this._term
-    }
+
     get is_term() {
-        return this._app.get_boolean("Terminal")
+        return this.__is_term_app
     }
     get frequency() { return this._frequency; }
     set frequency(value) {
         this._frequency = value;
         this.changed('frequency');
+
     }
 
     get name() { return this._app.get_name(); }
@@ -46,6 +47,8 @@ export class Application extends Service {
         super();
         this._app = app;
         this._frequency = frequency || 0;
+        this.__is_term_app = this._app.get_boolean("Terminal")
+        
     }
 
     private _match(prop: string | null, search: string) {
@@ -71,15 +74,21 @@ export class Application extends Service {
     };
 
     readonly launch = () => {
-        if (this.Terminal) {
-            utils.execAsync([this.Terminal,this.name])
+        const exec = this.app.get_commandline() ?? ""
+        if (this.is_term) {
+            const term = getenv('TERM')
+            if(!term){
+                throw Error("variable TERM no found")
+            }
+            
+            utils.execAsync([term,exec])
+           //const ta = Gio.app_info_create_from_commandline(exec,term,Gio.AppInfoCreateFlags.NONE).launch([],null)
         } else {
             this.app.launch([], null);
         }
-
-
         this.frequency++;
     };
+    
 }
 
 export class Applications extends Service {

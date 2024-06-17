@@ -18,8 +18,8 @@
         "forceConsistentCasingInFileNames": true
     },
     "include": [
-        "@girs",
+        "@girs/**/*",
         "types/*",
-        "src"
+        "src/**/*"
     ]
 }
