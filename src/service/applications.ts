@@ -74,7 +74,7 @@ export class Application extends Service {
     };
 
     readonly launch = () => {
-        const exec = this.app.get_commandline() ?? ""
+        /*const exec = this.app.get_commandline() ?? ""
         if (this.is_term) {
             const term = getenv('TERM')
             if(!term){
@@ -84,8 +84,10 @@ export class Application extends Service {
             utils.execAsync([term,exec])
            //const ta = Gio.app_info_create_from_commandline(exec,term,Gio.AppInfoCreateFlags.NONE).launch([],null)
         } else {
-            this.app.launch([], null);
+            
         }
+        */
+       this.app.launch([], null);
         this.frequency++;
     };
     
